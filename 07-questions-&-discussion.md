@@ -6,7 +6,7 @@
 
 Kinesis was created mostly as a byproduct of attempting to create a base for further AI experiments in embodied cognition. I wanted an agent with a complete physical presence that could navigate and interact with a broader physical environment in an organic and "non-scripted" way. Although I didn't think it would be a cakewalk, I simply misjudged the amount of work it would take to both implement and work with such a muscle-based system (at least, for someone like me without a graduate background in biodynamics, robotics, or mathematics). In hindsight, I could've picked a better approach for what I wanted to accomplish, but working on Kinesis was rewarding in its own right.
 
-The reason I decided to clean things up and release it on the Unity Asset Store was because I haven't really seen anything like it available for Unity, and I wanted to help jump-start the process for others who might want to follow down the same path. It definitely would've been nice to have something like Kinesis starting out.
+The reason I decided to clean up the implementation and release Kinesis on the Unity Asset Store was because I didn't really find anything like it available for Unity, and it definitely would've been nice to have something like it when starting out. My hope is that fellow experimenters find it a useful starting point.
 
 ***What does the muscle model in Kinesis ignore and what is it missing?***
 

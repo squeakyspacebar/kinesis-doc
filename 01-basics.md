@@ -64,3 +64,8 @@ All of the code within Kinesis is namespaced.
   The component registers a callback triggered by hierarchy changes that scans all muscle objects to keep an updated list. It also implements a singleton pattern, so you're only allowed to have one instance in your project; attempting to attach another instance will fail.
 
 - `Muscle Stimulator`: This component is meant to facilitate muscle testing from the Unity interface. You can use it to manually feed excitation and directly run physics simulation on a specific muscle. Requires a **Muscle Tendon Unit** component to exist on the object beforehand.
+
+### Exceptions
+
+- `MuscleComponentLengthException`: Thrown when a muscle element's length value exceeds the total muscle length. This can happen when the physics are moving too quickly and the muscle gets into a bad state, but should not occur often under normal operation.
+- `MuscleNodeMissingBoneException`: Thrown when attempting to access a muscle node's bone object when it has not been set (i.e. is `null`).

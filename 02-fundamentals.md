@@ -74,6 +74,6 @@ The primary concern of this section is describing the implementation of the `Mus
 
 - The `CalculateJointTorques()` and `ApplyJointTorques()` methods are used to iterate the muscle simulation step-by-step and are intended to be called inside `FixedUpdate()`. The functionality was separated between calculation and application to allow for more control and extensibility.
 
-- The `CalculateJointTorques()` method receives an excitation to drive the muscle dynamics and a dictionary to contain the necessary data to apply the calculation results.
+- The `CalculateJointTorques()` method receives an excitation to drive the muscle dynamics and a dictionary to store the calculated results. The dictionary sets the joint's muscle segment as a key and the torque that should be applied as the value.
 
-- The `ApplyJointTorques()` method receives a dictionary in the form that `CalculateJointTorques` uses, then parses that dictionary to apply the calculated joint torques to the proper rigid bodies.
+- The `ApplyJointTorques()` *static* method receives a dictionary in the form that `CalculateJointTorques()` requires, then parses that dictionary to apply the calculated joint torques to the proper rigid bodies. It was made static as it does not actually require instanced data and receives everything it needs via its argument.
