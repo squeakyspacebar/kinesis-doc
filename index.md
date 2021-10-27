@@ -13,6 +13,7 @@
   - [Code Overview](01-basics.md#code-overview)
     - [Namespaces](01-basics.md#namespaces)
     - [Components](01-basics.md#components)
+    - [Exceptions](01-basics.md#exceptions)
 - [**Fundamentals**](02-fundamentals.md#fundamentals)
   - [Model Architecture](02-fundamentals.md#model-architecture)
     - [Introduction to Hill-Type Muscle Models](02-fundamentals.md#introduction-to-hill-type-muscle-models)
