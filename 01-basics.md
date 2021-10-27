@@ -11,7 +11,7 @@
 
 The best place to start is to review the rest of the [Basics](01-basics.md#basics) section and the [Fundamentals](02-fundamentals.md#fundamentals) section to obtain at least a high-level overview of the package and its architecture. After that, the next steps would be to check out the [Tutorial](03-tutorial.md#tutorial) and the [Demo Scene](05-demo-scene.md#demo-scene).
 
-You can find the Doxygen-generated API documentation under `Kinesis/Documentation/html/index.html`, just open the file with a web browser.
+You can find the Doxygen-generated API documentation [online here](https://squeakyspacebar.github.io/kinesis-doc/api/) or in the project directory under `Kinesis/Documentation/html/index.html`.
 
 ## Package Overview
 
