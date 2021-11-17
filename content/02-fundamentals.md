@@ -46,8 +46,6 @@ The joint torque calculations are based on the following definitions. The muscle
 | :----------------------------------------------------------: |
 |           *Figure 3 - Multi-segment muscle model*            |
 
-
-
 ## Core
 
 This section primarily aims to provide a basic overview of the core muscle model implementation. For detailed code documentation, please refer to the [API documentation]() and the source code.
@@ -64,16 +62,12 @@ In the `Kinesis/Scripts/Core` directory, you should find three scripts that comp
 - `MuscleSegment.cs`: Contains the `MuscleSegment` class representing muscle segments.
 - `MuscleTendonUnit.cs`: Contains the `MuscleTendonUnit` [Monobehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) class implementing the actual muscle model.
 
-The primary concern of this section is describing the implementation of the `MuscleTendonUnit` class.
+However, the primary concern of this section is describing the implementation of the `MuscleTendonUnit` class:
 
 - The public `muscleNodes` and `muscleSegments` fields on `MuscleTendonUnit` contain the data representing the muscle path.
-
   > **Note:** The associated `MuscleTendonUnitEditor` script listens for muscle node changes and should automatically trigger a rebuild of the list of muscle segments.
 
   > **Caveat:** Currently, a **Muscle Segment** should not be defined such that it would span more than a single joint.
-
 - The `CalculateJointTorques()` and `ApplyJointTorques()` methods are used to iterate the muscle simulation step-by-step and are intended to be called inside `FixedUpdate()`. The functionality was separated between calculation and application to allow for more control and extensibility.
-
 - The `CalculateJointTorques()` method receives an excitation to drive the muscle dynamics and a dictionary to store the calculated results. The dictionary sets the joint's muscle segment as a key and the torque that should be applied as the value.
-
 - The `ApplyJointTorques()` *static* method receives a dictionary in the form that `CalculateJointTorques()` requires, then parses that dictionary to apply the calculated joint torques to the proper rigid bodies. It was made static as it does not actually require instanced data and receives everything it needs via its argument.

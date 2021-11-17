@@ -1,8 +1,6 @@
 ![Kinesis logo](images/kinesis-logo-black-v2.png)
 
-
-
-## Table of Contents
+# Table of Contents
 
 - [**Basics**](01-basics.md#basics)
   - [Getting Started](01-basics.md#getting-started)

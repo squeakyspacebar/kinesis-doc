@@ -1,0 +1,5 @@
+baseURL = 'https://squeakyspacebar.github.io/kinesis-doc/'
+disableKinds = ['RSS', 'taxonomy', 'taxonomyTerm', 'term', 'sitemap']
+languageCode = 'en-us'
+title = 'Kinesis Documentation'
+publishDir = "docs"

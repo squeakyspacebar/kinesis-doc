@@ -1,0 +1,35 @@
+{{- $currentPage := . -}}
+{{- $data := newScratch -}}
+{{- $data.Set "prev_heading_level" 0 -}}
+<nav class="site-nav" role="navigation">
+  <div class="site-nav-header">
+    <h1><a href="{{ .Site.BaseURL }}">{{- .Site.Title -}}</a></h1>
+  </div>
+  {{- range $index, $page := .Site.RegularPages.ByTitle -}}
+    {{- $headings := findRE `<h[0-9].*?>(.|\n)*?</h[0-9]>` $page.Content -}}
+    {{- $has_headings := ge (len $headings) 1 -}}
+    {{- if $has_headings -}}
+      {{- range $headings -}}
+        {{- $heading := . -}}
+        {{/* Grab the value of the heading element's ID attribute.
+             We have to work around the fact that Hugo's findRE function does not return matching groups. */}}
+        {{- $id := index (findRE `id=\"(.+)\"` .) 0 -}}
+        {{- $id := replaceRE `id=\"(.*)\"` "$1" $id -}}
+        {{- $heading_level := int (index (findRE "[0-9]" . 1) 0) -}}
+        {{- if gt $heading_level ($data.Get "prev_heading_level") -}}
+          <ul class="toc-hierarchy-l{{ $heading_level }}">
+        {{- else if lt $heading_level ($data.Get "prev_heading_level") -}}
+          {{- range seq 1 (sub ($data.Get "prev_heading_level") $heading_level) -}}
+          </ul>
+          {{- end -}}
+        {{- end -}}
+        {{- $data.Set "prev_heading_level" $heading_level -}}
+        {{/* Add the heading ID as the fragment ID to the URL. */}}
+        {{- $href := replaceRE `/$` (printf "#%s" $id) $page.RelPermalink -}}
+        <li class="toc-section">
+          <a class="toc-section-link{{ if eq $currentPage.RelPermalink $page.RelPermalink }} active{{end}}" href="{{ $href }}">{{- $heading | plainify | htmlUnescape -}}</a>
+        </li>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+</nav>

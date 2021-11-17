@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    {{- partial "head.html" . -}}
+    <body>
+        {{- partial "site-navigation.html" . -}}
+        <main class="site-main" role="main">
+        {{- block "main-content" . }}{{- end }}
+        </main>
+    </body>
+</html>

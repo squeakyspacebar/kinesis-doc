@@ -56,13 +56,9 @@ All of the code within Kinesis is namespaced.
 #### Non-Core
 
 - `Joint Muscle Segments`: This component is meant to be attached to any object with a [**Joint** component](https://docs.unity3d.com/Manual/Joints.html) [spanned by a muscle](#overview-of-the-multi-segment-hill-type-muscle-model-in-Kinesis). It scans and caches a list of the spanning muscle segments for quick lookup. Requires a **Joint** component to exist on the object beforehand.
-
 - `Muscle Group`: This is a minimal component meant as a convenient way to mark container objects for organizing/bundling muscles.
-
 - `Muscle Render Gizmo`: This component visualizes muscle-related data—such as muscle node positions, muscle segment lines, lever arms, and joint torques—in the Scene view, with several options to toggle information and choose which colors are used.
-
   The component registers a callback triggered by hierarchy changes that scans all muscle objects to keep an updated list. It also implements a singleton pattern, so you're only allowed to have one instance in your project; attempting to attach another instance will fail.
-
 - `Muscle Stimulator`: This component is meant to facilitate muscle testing from the Unity interface. You can use it to manually feed excitation and directly run physics simulation on a specific muscle. Requires a **Muscle Tendon Unit** component to exist on the object beforehand.
 
 ### Exceptions
