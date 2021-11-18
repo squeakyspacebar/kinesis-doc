@@ -9,29 +9,29 @@
 
 ### Beginner Orientation
 
-The best place to start is to review the rest of the [Basics](01-basics.md#basics) section and the [Fundamentals](02-fundamentals.md#fundamentals) section to obtain at least a high-level overview of the package and its architecture. After that, the next steps would be to check out the [Tutorial](03-tutorial.md#tutorial) and the [Demo Scene](05-demo-scene.md#demo-scene).
+The recommended way to start is to review the rest of the [Basics](01-basics.md#basics) and [Fundamentals](02-fundamentals.md#fundamentals) sections for a high-level overview of the package and its architecture. After that, check out the [Tutorial](03-tutorial.md#tutorial) and the [Demo](05-demo-scene.md#demo-scene) scenes included with the package, and read the [Tip & Tricks](06-tips-&-tricks.md#tips-&-tricks) section when you're ready to start experimenting.
 
-You can find the Doxygen-generated API documentation [online here](https://squeakyspacebar.github.io/kinesis-doc/api/) or in the project directory under `Kinesis/Documentation/html/index.html`.
+If you're reading a local version of this documentation, you can find the latest version online at [https://squeakyspacebar.github.io/kinesis-doc](https://squeakyspacebar.github.io/kinesis-doc). You can also find the Doxygen-generated API documentation in the package directory under `Kinesis/Documentation/html/index.html` or online at [https://squeakyspacebar.github.io/kinesis-doc/api/](https://squeakyspacebar.github.io/kinesis-doc/api/).
 
 ## Package Overview
 
 ### Package Contents
 
-- `Demo`: Contains all of the additional assets necessary for the demo scene.
-  - `Character`: Contains character model assets.
-  - `Editor`: Contains custom editor and property drawer scripts for demo components.
-  - `Environment`: Contains environment assets.
-  - `Prefabs`: Contains prefabs.
-  - `Scenes`: Contains the Tutorial and Demo scenes.
-  - `Scripts`: Contains demo scripts and components.
-- `Documentation`: Contains locally accessible documentation.
-- `Editor`: Contains custom editor and property drawer scripts to improve the basic editor experience.
-- `Scripts`: Contains the core muscle model implementation as well as some convenience components for working with muscles.
-  - `Attributes`: Contains basic non-essential attributes mainly for controlling field display in the Editor.
-  - `Components`: Contains components that add non-core functionality either for working from the Editor or via scripting.
-  - `Core`: Contains the core scripts that implement the muscle model.
-  - `Exceptions`: Contains custom exceptions thrown by Kinesis.
-  - `Library`: Contains generic code meant to be reused.
+- `Demo`: Additional assets for the tutorial and demo scenes.
+  - `Character`: Character model assets.
+  - `Editor`: Custom editor and property drawer scripts for demo components.
+  - `Environment`: Environment assets.
+  - `Prefabs`: Prefabs for the Tutorial and Demo scenes.
+  - `Scenes`: The Tutorial and Demo scenes.
+  - `Scripts`: Demo scripts and components.
+- `Documentation`: Locally packaged copy of documentation.
+- `Editor`: Custom editor and property drawer scripts to improve the basic editor experience.
+- `Scripts`: The core muscle model implementation, additional components, and supporting code.
+  - `Attributes`: Basic attributes, mainly for controlling the display of fields in the Editor.
+  - `Components`: Non-core components.
+  - `Core`: Core scripts that implement the muscle model.
+  - `Exceptions`: Custom exceptions thrown by Kinesis.
+  - `Library`: Generic reusable code.
 
 ## Code Overview
 
@@ -51,17 +51,17 @@ All of the code within Kinesis is namespaced.
 
 #### Core
 
-- `Muscle Tendon Unit`: This component holds the muscle model implementation and is what makes an object a muscle.
+- **Muscle Tendon Unit**: This component is the core of the muscle model implementation and is how you give an object muscle behavior.
 
 #### Non-Core
 
-- `Joint Muscle Segments`: This component is meant to be attached to any object with a [**Joint** component](https://docs.unity3d.com/Manual/Joints.html) [spanned by a muscle](#overview-of-the-multi-segment-hill-type-muscle-model-in-Kinesis). It scans and caches a list of the spanning muscle segments for quick lookup. Requires a **Joint** component to exist on the object beforehand.
-- `Muscle Group`: This is a minimal component meant as a convenient way to mark container objects for organizing/bundling muscles.
-- `Muscle Render Gizmo`: This component visualizes muscle-related data—such as muscle node positions, muscle segment lines, lever arms, and joint torques—in the Scene view, with several options to toggle information and choose which colors are used.
-  The component registers a callback triggered by hierarchy changes that scans all muscle objects to keep an updated list. It also implements a singleton pattern, so you're only allowed to have one instance in your project; attempting to attach another instance will fail.
-- `Muscle Stimulator`: This component is meant to facilitate muscle testing from the Unity interface. You can use it to manually feed excitation and directly run physics simulation on a specific muscle. Requires a **Muscle Tendon Unit** component to exist on the object beforehand.
+- **Joint Data**: Acts as a data container for conveniently referencing data related to muscle manipulation. As part of that responsibility, it scans and caches a list of joint-spanning muscle segments for quick lookup. Requires a [**Joint**](https://docs.unity3d.com/Manual/Joints.html) component on any GameObject it is attached to.
+- **Muscle Group**: This is a (currently) minimal component meant as a convenient way to mark a GameObject as a container for organizing/grouping muscles.
+- **Muscle Render Gizmo**: This component visualizes muscle-related data in the Scene view such as muscle node positions, muscle segment lines, lever arms, and joint torques, with several options to customize the display of information. The component also registers a callbackin the Scene view—triggered by hierarchy changes—that scans all muscle objects to keep an updated list.
+- **Muscle Rig**: Meant to be attached to a skeleton's root GameObject. It scans child GameObjects and attaches a **Joint Data** component if a corresponding **Joint** component is detected. The component performs the inverse when removed and removes any **Joint Data** components attached to child GameObjects.
+- **Muscle Stimulator**: This component provides the ability to interact directly with muscles from the Unity interface, and can be used to manually set excitation and run physics simulation for specific muscles. Requires a **Muscle Tendon Unit** component on any GameObject it is attached to.
 
 ### Exceptions
 
-- `MuscleComponentLengthException`: Thrown when a muscle element's length value exceeds the total muscle length. This can happen when the physics are moving too quickly and the muscle gets into a bad state, but should not occur often under normal operation.
-- `MuscleNodeMissingBoneException`: Thrown when attempting to access a muscle node's bone object when it has not been set (i.e. is `null`).
+- **MuscleComponentLengthException**: Thrown when a muscle element's length value exceeds the total muscle length. This can happen when the physics are moving too quickly and the muscle gets into a bad state, but should not occur often under normal operation.
+- **MuscleNodeMissingBoneException**: Thrown when attempting to reference the bone object of a muscle node when it has not been set (i.e. is `null`).

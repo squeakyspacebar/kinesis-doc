@@ -2,21 +2,19 @@
 
 ## Model Architecture
 
-This section primarily aims to provide a high-level introduction of the muscle model used in Kinesis. For mathematical details, please consult the [cited literature](10-bibliography.md#bibliography) and source code.
+This section primarily aims to provide a high-level introduction to the muscle model behind Kinesis. For a more detailed look, please consult the [cited literature](10-bibliography.md#bibliography) and source code.
 
 ### Introduction to Hill-Type Muscle Models
 
-The term "Hill-type muscle model" refers to a certain formulation of muscle dynamics model typically composed of a system of contractile, parallel, and serial components whose configurations can vary depending on the exact model.
+The term "Hill-type muscle model" or "Hill muscle model" refers to a certain kind of muscle dynamics model which is typically composed of a system of contractile, parallel, and serial components. The exact component configurations can vary depending on the model.
 
-The history of the Hill-type model stretches back to muscle research in the early 20th century and a paper by [(Hill, 1938)](/10-bibliography.md) describing the original muscle model. Due to limited insight into the internal structure and functioning of skeletal muscles, the Hill-type model developed as a [phenomenological model](https://en.wikipedia.org/wiki/Phenomenological_model) that treats internal muscle dynamics as a "black box," instead layering its own system of mechanical components to approximate *observed* characteristics of muscle behavior.
+The history of Hill-type models stretches back to the early 20th century and a paper by physiologist [A.V. Hill](https://en.wikipedia.org/wiki/Archibald_Hill) [(Hill, 1938)](/10-bibliography.md) formulating the original muscle model. Due to limited insight into the internal structure and functioning of skeletal muscles at the time, the Hill-type model was developed as a [phenomenological model](https://en.wikipedia.org/wiki/Phenomenological_model) that treats internal muscle dynamics as a "black box," instead utilizing abstracted mechanical components to approximate outwardly observed characteristics of muscle behavior. Hill-type models are typically massless, and component elements are often likened to [spring-dashpot models](https://en.wikipedia.org/wiki/Standard_linear_solid_model). Although the basis for these models may seem dated, they can still provide insightful results, and remain popular because they are relatively easy to understand and work with.
 
 | ![Diagram of a Hill-type muscle model](images/fundamentals-hill-type-muscle-model.png) |
 | :----------------------------------------------------------: |
 | [*Figure 1 - Structure of a Hill-Type Muscle Model*](https://www.researchgate.net/figure/Structure-of-a-Hill-type-muscle-model-F-CE-and-F-PE-are-the-active-and-passive-forces_fig1_334812764) by (Zhou, et al., 2019) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 
-As indications of their somewhat contrived nature, Hill-type models are typically massless, and component elements are often described by comparison to spring and dashpot assemblies. Although the basis for these models may seem dated, they can still provide insightful results, and remain popular because they are relatively easy to understand and work with.
-
-We'll start by looking at the three-element Hill-type model in Kinesis. This model typically consists of a contractile element (CE) in combination with two nonlinear spring elements: one called the parallel element (PE) as it is parallel to the CE, and one called the serial element (SE) as it is in series in relation to both the CE and PE. Hill-type models commonly approach muscle dynamics by focusing on muscle contraction force, which depends on the muscle's physical state at any given moment (mainly CE length and contraction velocity).
+We'll start by looking at the three-element Hill-type model in Kinesis. This model typically consists of a contractile element (CE) in combination with two nonlinear spring elements: the parallel element (PE), as it is parallel to the CE, and the serial element (SE), as it is in series to both the CE and PE together. Hill-type models often focus on the muscle contraction force, which depends on the muscle's physical state at a given moment (i.e. CE length and contraction velocity).
 
 | ![Diagram of a 3-element Hill-type muscle model](images/fundamentals-3-element-hill-model.png) |
 | :----------------------------------------------------------: |
@@ -24,23 +22,23 @@ We'll start by looking at the three-element Hill-type model in Kinesis. This mod
 
 Relating each element to a biological analogue may be helpful:
 
-- The CE can be seen to represent the muscle fibers that contract under activation.
-- The PE can be seen to represent passive elastic connective tissue around the contractile muscle fibers that resist stretching or compression. Being passive means that the element does not respond directly to activation.
-- The SE can be seen to represent the (also passive and elastic) tendinous material that attaches muscle to bone.
+- The CE represents muscle fibers that contract when the muscle is activated.
+- The PE represents passive connective tissue around the contractile muscle fibers that are elastic and resist stretching or compression. Being passive means that the element does not respond directly to activation.
+- The SE represents the tendon (also passive and elastic) that attaches muscle to bone.
 
-A reminder that these biological interpretations are merely mental conveniences. Real biological muscle structure and function is much more complex, featuring dynamics often overlooked in Hill-type models.
+A caveat though that these biological interpretations are merely for mental convenience. There are of course much more complex and detailed models of muscle structure and function depending on the characteristics being investigated.
 
-Also, as a clarifying note if you're exploring the literature for the first time, PE and SE elements often only consist of a parallel *elastic* element (PEE) and a serial *elastic* element (SEE) respectively, but some models may also feature a parallel damping element (PDE) or even a serial damping element (SDE); both the elastic and damping elements are typically considered components of their broader respective elements (i.e. the PE consists of both the PEE and SDE, and the SE consists of both the SEE and SDE).
+Also, a note if you're unfamiliar, PE and SE elements are often seen only consisting of a parallel *elastic* element (PEE) and a serial *elastic* element (SEE) respectively, but it's not uncommon to encounter models that also feature a parallel *damping* element (PDE) and/or a serial *damping* element (SDE); both the elastic and damping elements are typically considered component parts of their broader respective elements (i.e. the PE consists of the PEE *and* PDE, and the SE consists of the SEE *and* SDE).
 
 ### Overview of the Multi-Segment Hill-Type Muscle Model in Kinesis
 
-The model in Kinesis is heavily based on the descriptions in [(Geijtenbeek, et al., 2013)](/10-bibliography.md), but its construction was informed by multiple papers and required further accommodations to operate smoothly in Unity.
+The muscle model in Kinesis is heavily based on the descriptions in [(Geijtenbeek, et al., 2013)](/10-bibliography.md), but its construction was informed by multiple sources and required adjustments to operate smoothly in Unity. In this multi-segment model, the muscle's physical length is defined by a series of muscle nodes—points defined on the character model—that are linked together to form muscle segments.
 
-In this multi-segment model, the muscle's physical path is described by a series of muscle nodes—point positions defined on the character model—that link together as muscle segments. Segments with nodes defined on separate adjacent bodies are said to *span* the joint connecting the bodies. These segments are used when calculating the joint torques generated by the muscle.
+Each muscle node has a position defined relative to a body part or "bone" and maintains that relative position to the bone as it moves. Each segment is defined by exactly a pair of nodes, and those with their nodes on separate (but adjacent) bodies/bones are said to *span* the joint that connects the bodies/bones. These spanning segments are important for calculating the joint torques generated by the muscle.
 
-To drive the muscle dynamics, each muscle receives an *excitation signal* which is then mapped by some defined *activation dynamics* into a *muscle activation*, which controls muscle contraction activity. As a muscle contracts or relaxes, both the length of the CE and the velocity of contraction are used to determine the generated contractile force, which is in turn used to calculate the joint torques generated by the muscle.
+Each muscle receives an *excitation signal*, which is then transformed by *activation dynamics* into a *muscle activation*, which is what drives muscle contraction. Both the CE length and contraction velocity are used to determine the contractile force being generated, which is then used to calculate the joint torques generated by the muscle.
 
-The joint torque calculations are based on the following definitions. The muscle's contractile force (which the model outputs as a scalar magnitude value) is applied down the line of action, which is defined from the muscle segment's tail position (the one with the higher index) toward its head position. To put it another way, the muscle's contractile force scales the line of action unit vector. The lever arm is simply the vector from the joint position toward the [spanning] muscle segment's tail position.
+The joint torques are calculated based on the following. Each muscle's contractile force (which is a scalar magnitude value) is applied to the *line of action*, which is a unit vector pointing from the spanning muscle segment's tail node (the one with the higher index) toward its head node. Put another way, the magnitude of the muscle's contractile force scales the line of action unit vector. The *lever arm* is simply the vector from the joint toward the spanning muscle segment's tail node.
 
 | ![Diagram of a multi-segment muscle model](images/fundamentals-multi-segment-model.png) |
 | :----------------------------------------------------------: |
@@ -48,26 +46,50 @@ The joint torque calculations are based on the following definitions. The muscle
 
 ## Core
 
-This section primarily aims to provide a basic overview of the core muscle model implementation. For detailed code documentation, please refer to the [API documentation]() and the source code.
+This section aims to provide a basic overview of the core muscle model implementation. Please refer to the [API documentation](https://squeakyspacebar.github.io/kinesis-doc/api/) (either the version included with the project or online) and the source code for further details.
 
 ### Concepts
 
-Please refer to the [Overview of the Multi-Segment Hill-Type Muscle Model in Kinesis](#overview-of-the-multi-segment-hill-type-muscle-model-in-kinesis) for a conceptual overview.
+Please refer to the previous [Overview of the Multi-Segment Hill-Type Muscle Model in Kinesis](#overview-of-the-multi-segment-hill-type-muscle-model-in-kinesis) section for a conceptual brief.
 
-### Code Structure
+### Directory and File Structure
 
-In the `Kinesis/Scripts/Core` directory, you should find three scripts that comprise the core implementation of the muscle model:
+In the `Kinesis/Scripts/Core` directory, you should find the scripts that comprise the core implementation of the muscle model:
 
 - `MuscleNode.cs`: Contains the `MuscleNode` class representing muscle nodes.
 - `MuscleSegment.cs`: Contains the `MuscleSegment` class representing muscle segments.
 - `MuscleTendonUnit.cs`: Contains the `MuscleTendonUnit` [Monobehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) class implementing the actual muscle model.
 
-However, the primary concern of this section is describing the implementation of the `MuscleTendonUnit` class:
+### Code Structure
 
-- The public `muscleNodes` and `muscleSegments` fields on `MuscleTendonUnit` contain the data representing the muscle path.
-  > **Note:** The associated `MuscleTendonUnitEditor` script listens for muscle node changes and should automatically trigger a rebuild of the list of muscle segments.
+#### Muscle Node
 
+Muscle nodes are represented by the `MuscleNode` class. It has a very basic structure:
+- `bone`: Represents the "bone" that the muscle node is "attached" to.
+- `offset`: The relative position (in the bone's local coordinate space) that the muscle node maintains.
+
+#### Muscle Segment
+
+Muscle segments are represented by the `MuscleSegment` class.
+- `prevSegment`: References the adjacent muscle segment toward the muscle origin along the muscle path.
+- `parentMuscle`: References the `MuscleTendonUnit` the muscle segment is a part of.
+- `head`: References the `MuscleNode` toward the muscle origin along the muscle path.
+- `tail`: References the `MuscleNode` toward the muscle insertion along the muscle path.
+- `joint`: If the muscle segment spans a joint, this references the **Joint** spanned by the muscle segment.
+- `jointAnchorBody`: References the **Rigidbody** that is the anchor for `joint`.
+
+#### Muscle Tendon Unit
+
+The `MuscleTendonUnit` class represents a MTU (muscle-tendon unit, which is the "muscle" we refere to in this documentation) as a whole. It is a fairly large technical class and would take a lot more content to explain in-depth, so here are some of the more important highlights:
+
+- The public `muscleNodes` and `muscleSegments` fields contain the data representing the muscle path.
   > **Caveat:** Currently, a **Muscle Segment** should not be defined such that it would span more than a single joint.
-- The `CalculateJointTorques()` and `ApplyJointTorques()` methods are used to iterate the muscle simulation step-by-step and are intended to be called inside `FixedUpdate()`. The functionality was separated between calculation and application to allow for more control and extensibility.
-- The `CalculateJointTorques()` method receives an excitation to drive the muscle dynamics and a dictionary to store the calculated results. The dictionary sets the joint's muscle segment as a key and the torque that should be applied as the value.
-- The `ApplyJointTorques()` *static* method receives a dictionary in the form that `CalculateJointTorques()` requires, then parses that dictionary to apply the calculated joint torques to the proper rigid bodies. It was made static as it does not actually require instanced data and receives everything it needs via its argument.
+
+  > **Note:** The `MuscleTendonUnitEditor` script listens for muscle node updates and should automatically trigger a rebuild of the muscle segment list.
+- The `CalculateJointTorques()` and `ApplyJointTorques()` methods are used to iterate the muscle simulation. The functionality was separated between calculation and application to allow for more control and extensibility. Please check out the **Muscle Simulation** component in the included [Demo Scene](05-demo-scene.md) for an example.
+- The `CalculateJointTorques()` method takes an excitation signal and a dictionary to store the calculated results. The dictionary uses spanning muscle segments as keys and the joint torques that should be applied as the values.
+- The `ApplyJointTorques()` *static* method takes a dictionary in the same form as `CalculateJointTorques()`. It parses the given dictionary to apply the joint torques to the proper rigid bodies. It is a static method as it does not require any instanced data and receives everything it needs through its arguments.
+- There are a number of constants defined in that class. Most of these are part of the more opaque technical details of the muscle model and are not meant to be adjusted casually.
+- `normalizedSEESlackLength`  controls the initial ratio of SEE to CE length out of the total muscle length.
+- `maxIsometricForce` most directly adjusts the force a muscle is able to generate under contraction.
+- `activationConstant` affects the activation rate in the activation dynamics.

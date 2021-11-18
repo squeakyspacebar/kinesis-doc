@@ -52,8 +52,16 @@
         </li><ul class="toc-hierarchy-l3"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#concepts">Concepts</a>
         </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#directory-and-file-structure">Directory and File Structure</a>
+        </li><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#code-structure">Code Structure</a>
-        </li></ul></ul><li class="toc-section">
+        </li><ul class="toc-hierarchy-l4"><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-node">Muscle Node</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-segment">Muscle Segment</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-tendon-unit">Muscle Tendon Unit</a>
+        </li></ul></ul></ul><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#tutorial">Tutorial</a>
         </li><ul class="toc-hierarchy-l2"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#loading-the-tutorial-scene">Loading the Tutorial Scene</a>
@@ -114,30 +122,30 @@
 <li><a href="https://docs.unity3d.com/Manual/upm-ui-import.html">Download and import the Kinesis package</a> into your project. That&rsquo;s it.</li>
 </ol>
 <h3 id="beginner-orientation">Beginner Orientation</h3>
-<p>The best place to start is to review the rest of the <a href="01-basics.md#basics">Basics</a> section and the <a href="02-fundamentals.md#fundamentals">Fundamentals</a> section to obtain at least a high-level overview of the package and its architecture. After that, the next steps would be to check out the <a href="03-tutorial.md#tutorial">Tutorial</a> and the <a href="05-demo-scene.md#demo-scene">Demo Scene</a>.</p>
-<p>You can find the Doxygen-generated API documentation <a href="https://squeakyspacebar.github.io/kinesis-doc/api/">online here</a> or in the project directory under <code>Kinesis/Documentation/html/index.html</code>.</p>
+<p>The recommended way to start is to review the rest of the <a href="01-basics.md#basics">Basics</a> and <a href="02-fundamentals.md#fundamentals">Fundamentals</a> sections for a high-level overview of the package and its architecture. After that, check out the <a href="03-tutorial.md#tutorial">Tutorial</a> and the <a href="05-demo-scene.md#demo-scene">Demo</a> scenes included with the package, and read the <a href="06-tips-&amp;-tricks.md#tips-&amp;-tricks">Tip &amp; Tricks</a> section when you&rsquo;re ready to start experimenting.</p>
+<p>If you&rsquo;re reading a local version of this documentation, you can find the latest version online at <a href="https://squeakyspacebar.github.io/kinesis-doc">https://squeakyspacebar.github.io/kinesis-doc</a>. You can also find the Doxygen-generated API documentation in the package directory under <code>Kinesis/Documentation/html/index.html</code> or online at <a href="https://squeakyspacebar.github.io/kinesis-doc/api/">https://squeakyspacebar.github.io/kinesis-doc/api/</a>.</p>
 <h2 id="package-overview">Package Overview</h2>
 <h3 id="package-contents">Package Contents</h3>
 <ul>
-<li><code>Demo</code>: Contains all of the additional assets necessary for the demo scene.
+<li><code>Demo</code>: Additional assets for the tutorial and demo scenes.
 <ul>
-<li><code>Character</code>: Contains character model assets.</li>
-<li><code>Editor</code>: Contains custom editor and property drawer scripts for demo components.</li>
-<li><code>Environment</code>: Contains environment assets.</li>
-<li><code>Prefabs</code>: Contains prefabs.</li>
-<li><code>Scenes</code>: Contains the Tutorial and Demo scenes.</li>
-<li><code>Scripts</code>: Contains demo scripts and components.</li>
+<li><code>Character</code>: Character model assets.</li>
+<li><code>Editor</code>: Custom editor and property drawer scripts for demo components.</li>
+<li><code>Environment</code>: Environment assets.</li>
+<li><code>Prefabs</code>: Prefabs for the Tutorial and Demo scenes.</li>
+<li><code>Scenes</code>: The Tutorial and Demo scenes.</li>
+<li><code>Scripts</code>: Demo scripts and components.</li>
 </ul>
 </li>
-<li><code>Documentation</code>: Contains locally accessible documentation.</li>
-<li><code>Editor</code>: Contains custom editor and property drawer scripts to improve the basic editor experience.</li>
-<li><code>Scripts</code>: Contains the core muscle model implementation as well as some convenience components for working with muscles.
+<li><code>Documentation</code>: Locally packaged copy of documentation.</li>
+<li><code>Editor</code>: Custom editor and property drawer scripts to improve the basic editor experience.</li>
+<li><code>Scripts</code>: The core muscle model implementation, additional components, and supporting code.
 <ul>
-<li><code>Attributes</code>: Contains basic non-essential attributes mainly for controlling field display in the Editor.</li>
-<li><code>Components</code>: Contains components that add non-core functionality either for working from the Editor or via scripting.</li>
-<li><code>Core</code>: Contains the core scripts that implement the muscle model.</li>
-<li><code>Exceptions</code>: Contains custom exceptions thrown by Kinesis.</li>
-<li><code>Library</code>: Contains generic code meant to be reused.</li>
+<li><code>Attributes</code>: Basic attributes, mainly for controlling the display of fields in the Editor.</li>
+<li><code>Components</code>: Non-core components.</li>
+<li><code>Core</code>: Core scripts that implement the muscle model.</li>
+<li><code>Exceptions</code>: Custom exceptions thrown by Kinesis.</li>
+<li><code>Library</code>: Generic reusable code.</li>
 </ul>
 </li>
 </ul>
@@ -177,20 +185,20 @@
 <h3 id="components">Components</h3>
 <h4 id="core">Core</h4>
 <ul>
-<li><code>Muscle Tendon Unit</code>: This component holds the muscle model implementation and is what makes an object a muscle.</li>
+<li><strong>Muscle Tendon Unit</strong>: This component is the core of the muscle model implementation and is how you give an object muscle behavior.</li>
 </ul>
 <h4 id="non-core">Non-Core</h4>
 <ul>
-<li><code>Joint Muscle Segments</code>: This component is meant to be attached to any object with a <a href="https://docs.unity3d.com/Manual/Joints.html"><strong>Joint</strong> component</a> <a href="#overview-of-the-multi-segment-hill-type-muscle-model-in-Kinesis">spanned by a muscle</a>. It scans and caches a list of the spanning muscle segments for quick lookup. Requires a <strong>Joint</strong> component to exist on the object beforehand.</li>
-<li><code>Muscle Group</code>: This is a minimal component meant as a convenient way to mark container objects for organizing/bundling muscles.</li>
-<li><code>Muscle Render Gizmo</code>: This component visualizes muscle-related data—such as muscle node positions, muscle segment lines, lever arms, and joint torques—in the Scene view, with several options to toggle information and choose which colors are used.
-The component registers a callback triggered by hierarchy changes that scans all muscle objects to keep an updated list. It also implements a singleton pattern, so you&rsquo;re only allowed to have one instance in your project; attempting to attach another instance will fail.</li>
-<li><code>Muscle Stimulator</code>: This component is meant to facilitate muscle testing from the Unity interface. You can use it to manually feed excitation and directly run physics simulation on a specific muscle. Requires a <strong>Muscle Tendon Unit</strong> component to exist on the object beforehand.</li>
+<li><strong>Joint Data</strong>: Acts as a data container for conveniently referencing data related to muscle manipulation. As part of that responsibility, it scans and caches a list of joint-spanning muscle segments for quick lookup. Requires a <a href="https://docs.unity3d.com/Manual/Joints.html"><strong>Joint</strong></a> component on any GameObject it is attached to.</li>
+<li><strong>Muscle Group</strong>: This is a (currently) minimal component meant as a convenient way to mark a GameObject as a container for organizing/grouping muscles.</li>
+<li><strong>Muscle Render Gizmo</strong>: This component visualizes muscle-related data in the Scene view such as muscle node positions, muscle segment lines, lever arms, and joint torques, with several options to customize the display of information. The component also registers a callbackin the Scene view—triggered by hierarchy changes—that scans all muscle objects to keep an updated list.</li>
+<li><strong>Muscle Rig</strong>: Meant to be attached to a skeleton&rsquo;s root GameObject. It scans child GameObjects and attaches a <strong>Joint Data</strong> component if a corresponding <strong>Joint</strong> component is detected. The component performs the inverse when removed and removes any <strong>Joint Data</strong> components attached to child GameObjects.</li>
+<li><strong>Muscle Stimulator</strong>: This component provides the ability to interact directly with muscles from the Unity interface, and can be used to manually set excitation and run physics simulation for specific muscles. Requires a <strong>Muscle Tendon Unit</strong> component on any GameObject it is attached to.</li>
 </ul>
 <h3 id="exceptions">Exceptions</h3>
 <ul>
-<li><code>MuscleComponentLengthException</code>: Thrown when a muscle element&rsquo;s length value exceeds the total muscle length. This can happen when the physics are moving too quickly and the muscle gets into a bad state, but should not occur often under normal operation.</li>
-<li><code>MuscleNodeMissingBoneException</code>: Thrown when attempting to access a muscle node&rsquo;s bone object when it has not been set (i.e. is <code>null</code>).</li>
+<li><strong>MuscleComponentLengthException</strong>: Thrown when a muscle element&rsquo;s length value exceeds the total muscle length. This can happen when the physics are moving too quickly and the muscle gets into a bad state, but should not occur often under normal operation.</li>
+<li><strong>MuscleNodeMissingBoneException</strong>: Thrown when attempting to reference the bone object of a muscle node when it has not been set (i.e. is <code>null</code>).</li>
 </ul>
 
 </section>

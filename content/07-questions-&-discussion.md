@@ -12,14 +12,14 @@ The reason I decided to clean up the implementation and release Kinesis on the U
 
 The muscle model in Kinesis is a somewhat simpler version of Hill-type muscle model. While it does handle segmented pathing, features that were not included in the initial implementation include:
 
-- Serial damping effects.
-- Modeling with muscle fiber pennation angles.
-- Handling for more complex muscles such as those with multiple heads, insertions, and sheet-like muscles that extend over large areas.
+- Modeling of muscle fiber pennation angles.
+- Modeling of serial damping effects.
+- Handling for more complex muscles such as those with multiple heads, insertions, and sheet-like muscles.
 
 There are other phenomena that Hill-type muscles models don't typically seem to address:
 
-- The effects of muscle mass, although there has been at least some exploration of this with Hill-type muscle models.
-- The effects of recent or extended activity on muscle dynamics.
+- Muscle mass, although there has been at least some exploration of this with Hill-type muscle models.
+- The effects of previous activity (of various timescales) on muscle dynamics.
 
 ***The model applies forces using the muscle segments as lines of action. Why use* [`AddTorque()`](https://docs.unity3d.com/ScriptReference/Rigidbody.AddTorque.html) *instead of* [`AddForce()`](https://docs.unity3d.com/ScriptReference/Rigidbody.AddForce.html)?**
 

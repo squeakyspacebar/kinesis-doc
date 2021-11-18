@@ -52,8 +52,16 @@
         </li><ul class="toc-hierarchy-l3"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#concepts">Concepts</a>
         </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#directory-and-file-structure">Directory and File Structure</a>
+        </li><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#code-structure">Code Structure</a>
-        </li></ul></ul><li class="toc-section">
+        </li><ul class="toc-hierarchy-l4"><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-node">Muscle Node</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-segment">Muscle Segment</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-tendon-unit">Muscle Tendon Unit</a>
+        </li></ul></ul></ul><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#tutorial">Tutorial</a>
         </li><ul class="toc-hierarchy-l2"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#loading-the-tutorial-scene">Loading the Tutorial Scene</a>
@@ -114,14 +122,14 @@
 <p><em><strong>What does the muscle model in Kinesis ignore and what is it missing?</strong></em></p>
 <p>The muscle model in Kinesis is a somewhat simpler version of Hill-type muscle model. While it does handle segmented pathing, features that were not included in the initial implementation include:</p>
 <ul>
-<li>Serial damping effects.</li>
-<li>Modeling with muscle fiber pennation angles.</li>
-<li>Handling for more complex muscles such as those with multiple heads, insertions, and sheet-like muscles that extend over large areas.</li>
+<li>Modeling of muscle fiber pennation angles.</li>
+<li>Modeling of serial damping effects.</li>
+<li>Handling for more complex muscles such as those with multiple heads, insertions, and sheet-like muscles.</li>
 </ul>
 <p>There are other phenomena that Hill-type muscles models don&rsquo;t typically seem to address:</p>
 <ul>
-<li>The effects of muscle mass, although there has been at least some exploration of this with Hill-type muscle models.</li>
-<li>The effects of recent or extended activity on muscle dynamics.</li>
+<li>Muscle mass, although there has been at least some exploration of this with Hill-type muscle models.</li>
+<li>The effects of previous activity (of various timescales) on muscle dynamics.</li>
 </ul>
 <p><strong><em>The model applies forces using the muscle segments as lines of action. Why use</em> <a href="https://docs.unity3d.com/ScriptReference/Rigidbody.AddTorque.html"><code>AddTorque()</code></a> <em>instead of</em> <a href="https://docs.unity3d.com/ScriptReference/Rigidbody.AddForce.html"><code>AddForce()</code></a>?</strong></p>
 <p>I did experiment with <code>AddForce()</code> in the beginning, but it quickly became apparent that the approach was inherently unstable, even though one would imagine they should thereotically generate the same results. Not only was using <code>AddTorque()</code> more stable, but it also simplified the code required for movement forces.</p>

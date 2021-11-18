@@ -52,8 +52,16 @@
         </li><ul class="toc-hierarchy-l3"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#concepts">Concepts</a>
         </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#directory-and-file-structure">Directory and File Structure</a>
+        </li><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#code-structure">Code Structure</a>
-        </li></ul></ul><li class="toc-section">
+        </li><ul class="toc-hierarchy-l4"><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-node">Muscle Node</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-segment">Muscle Segment</a>
+        </li><li class="toc-section">
+          <a class="toc-section-link" href="/kinesis-doc/02-fundamentals#muscle-tendon-unit">Muscle Tendon Unit</a>
+        </li></ul></ul></ul><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#tutorial">Tutorial</a>
         </li><ul class="toc-hierarchy-l2"><li class="toc-section">
           <a class="toc-section-link" href="/kinesis-doc/03-tutorial#loading-the-tutorial-scene">Loading the Tutorial Scene</a>
@@ -108,44 +116,48 @@
 <section class="main-content">
 <h1 id="demo-scene">Demo Scene</h1>
 <h2 id="demo-overview">Demo Overview</h2>
-<p>Kinesis comes with a simple demonstration scene that includes a model rigged with several muscles. Please see the <a href="01-basics.md#package-contents">Package Contents</a> section for the demo directory layout.</p>
+<p>Kinesis comes with a simple demonstration scene that includes a model rigged with several muscles. Please refer to the <a href="01-basics.md#package-contents">Package Contents</a> section for the demo directory layout.</p>
 <blockquote>
 <p><strong>Caveat:</strong> The model in the demo is not meant to be taken as anatomically precise or accurate. The model is only generally humanoid, the skeleton is fairly simple, and the muscle paths are &ldquo;looks good enough&rdquo; estimates adapted to the morphology of the model.</p>
+</blockquote>
+<blockquote>
 <p>The parameters of the muscles themselves are also currently not set against any particular reference, so their responses may not be quite true to life. Also, not all of the muscles were able to receive equal amounts of testing attention, so there are certain to be configurations that don&rsquo;t behave well. Feel free to experiment away, just be aware that the model is merely a rough demo.</p>
 </blockquote>
 <p>The included &ldquo;DemoArmature&rdquo; has two important children in its hierarchy:</p>
 <ul>
-<li>&ldquo;Skeleton&rdquo;: Contains the skeleton hierarchy that came with the model, set up with colliders, <strong>Rigidbody</strong> components, and <strong>CharacterJoint</strong> components.
+<li>
+<p>&ldquo;Skeleton&rdquo;: Contains the skeleton hierarchy. It has been configured with colliders, <strong>Rigidbody</strong> components, and <strong>CharacterJoint</strong> components for the demo.</p>
 <blockquote>
-<p><strong>Caveat:</strong> Since there is no automated muscle controller, you&rsquo;ll have to constrain parts of the model if you want it to &ldquo;stand up&rdquo; without any additional work. I typically pin the &ldquo;Hips,&rdquo; &ldquo;Spine,&rdquo; &ldquo;Chest,&rdquo; and &ldquo;Upper Chest&rdquo; bones by setting <em>Is Kinematic</em> to <code>true</code> on their respective <strong>Rigidbody</strong> components when working on the limbs.</p>
+<p><strong>Caveat:</strong> Since there is no automated muscle controller out-of-the-box, unless you have a controller of our own, you&rsquo;ll have to constrain parts of the model if you want it to &ldquo;stand upright.&rdquo; I typically set <em>Is Kinematic</em> to <code>true</code> on the <strong>Rigidbody</strong> components of the &ldquo;Hips,&rdquo; &ldquo;Spine,&rdquo; &ldquo;Chest,&rdquo; and &ldquo;Upper Chest&rdquo; in order to &ldquo;pin&rdquo; them in place when working with limbs in isolation.</p>
 </blockquote>
 </li>
-<li>&ldquo;Musculature&rdquo;: Contains the muscle hierarchy for the model. You&rsquo;ll find all of the muscles in the demo here, organized under muscle groups.</li>
+<li>
+<p>&ldquo;Musculature&rdquo;: Contains the muscle hierarchy. You&rsquo;ll find all of the muscles here, organized under muscle groups.</p>
+</li>
 </ul>
 <h2 id="demo-components">Demo Components</h2>
 <ul>
 <li><code>Camera Controller</code>: Provides a simple free-roam camera controller for navigating the Game view in Play Mode.</li>
-<li><code>Muscle Simulation</code>: Provides a centralized loop that runs physics calculations for all of the muscles in the scene and feeds in excitation from any <strong>Muscle Stimulator</strong> components connected to the muscles.</li>
+<li><code>Muscle Simulation</code>: Provides a centralized loop that runs physics calculations for all of the muscles in the scene and feeds in any excitations from the <strong>Muscle Stimulator</strong> components connected to the muscles.</li>
 </ul>
 <h2 id="loading-the-demo-scene">Loading the Demo Scene</h2>
 <p>You&rsquo;ll find the Demo Scene under <code>Kinesis/Demo/Scenes/DemoScene.unity</code>, which you can open by either navigating to it via <strong>File &gt; Open Scene</strong> or the <strong>Project</strong> window.</p>
 <p>You can either create a new project or use an existing one to open the scene.</p>
 <h2 id="viewing-the-demo-scene">Viewing the Demo Scene</h2>
-<p>The demo scene has a <strong>Muscle Render Gizmo</strong> component set up to visualize muscle-related data in Scene view, but it also comes with a simple free-roam camera controller on the &ldquo;Main Camera&rdquo; to navigate around the Game view while Play Mode is active. This should make it convenient to inspect both muscle structure and dynamics.</p>
-<p>To switch whether Play Mode starts in Game view or Scene view, select &ldquo;Main Camera&rdquo; in the Hierarchy window and toggle the <em>Start in Scene View</em> field under the <strong>Camera Controller</strong> component.</p>
+<p>The demo scene has a <strong>Muscle Render Gizmo</strong> component set up to visualize muscle-related data in Scene view, but you can also use the provided free-roam camera (&ldquo;Main Camera&rdquo;) to navigate around the Game view when Play Mode is active.</p>
+<p>To switch between whether Play Mode starts in Game view or Scene view, select &ldquo;Main Camera&rdquo; in the Hierarchy window and toggle <em>Start in Scene View</em> under the <strong>Camera Controller</strong> component.</p>
 <h2 id="interacting-with-the-demo">Interacting with the Demo</h2>
 <p>The demo has a <strong>Muscle Simulation</strong> component attached to each muscle that allows you to adjust muscle excitation manually. Here&rsquo;s a quick step through:</p>
 <ol>
-<li>Select &ldquo;Main Camera&rdquo; in the Hierarchy window and navigate to the <strong>Camera Controller</strong> component in the Inspector window.</li>
-<li>You can choose to either start Play Mode in Scene view or Game view by toggling the <em>Start in Scene View</em> checkbox. For now, leave <em>Start in Scene View</em> checked.
+<li>Select &ldquo;Main Camera&rdquo; in the Hierarchy window and navigate to the <strong>Camera Controller</strong> component in the Inspector window. Make sure <em>Start in Scene View</em> is checked.
 <img src="/kinesis-doc/images/demo-start-in-scene-view.png" alt="Screenshot of Camera Controller component editor with Start in Scene View checked" >
 </li>
-<li>In the Hierarchy window, expand &ldquo;DemoArmature&rdquo; &gt; &ldquo;Musculature&rdquo; &gt; &ldquo;ArmGroup&rdquo; &gt; &ldquo;ArmAnteriorGroup.&rdquo; You should see the arm flexor muscles including the biceps. Hold Ctrl and select both the &ldquo;LeftBicepsLong&rdquo; and &ldquo;LeftBicepsShort&rdquo; muscles. You should see the muscles highlighted in the Scene view.
+<li>In the Hierarchy window, expand &ldquo;DemoArmature&rdquo; &gt; &ldquo;Musculature&rdquo; &gt; &ldquo;ArmGroup&rdquo; &gt; &ldquo;ArmAnteriorGroup.&rdquo; You should see the list of arm flexor muscles including the biceps. Hold Ctrl and select both the &ldquo;LeftBicepsLong&rdquo; and &ldquo;LeftBicepsShort&rdquo; muscles. You should see both muscles highlighted in the Scene view.
 <img src="/kinesis-doc/images/demo-biceps-selected.png" alt="Screenshot of biceps selected in Hierarchy window" >
 </li>
 <li>Start Play Mode by selecting the Play icon or Ctrl + P.</li>
-<li>In the Inspector window, navigate to the <strong>Muscle Stimulator</strong> component and adjust the <em>Excitation</em> slider. Watch the muscles react in the Scene view. Switch over to Game view, press Escape to release the mouse cursor, then adjust the excitation for the biceps again.</li>
-<li>Play around with other muscles. You can also see what happens if you adjust their parameters such as <em>Normalized SEE Slack Length</em> and <em>Max Isometric Force</em>, though you&rsquo;ll want to step out of Play Mode before changing parameter values. Just remember to make sure that the bones you&rsquo;re looking to drive.</li>
+<li>In the Inspector window, navigate to the <strong>Muscle Stimulator</strong> component and adjust the <em>Excitation</em> slider. Watch the muscles react in Scene view.</li>
+<li>Play around with other muscles. You can also see what happens if you adjust parameters such as <em>Normalized SEE Slack Length</em> and <em>Max Isometric Force</em>, though you&rsquo;ll want to stop Play Mode before changing parameter values.</li>
 </ol>
 
 </section>
