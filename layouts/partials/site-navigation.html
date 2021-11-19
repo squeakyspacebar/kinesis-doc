@@ -6,21 +6,28 @@
     <h1><a href="{{ .Site.BaseURL }}">{{- .Site.Title -}}</a></h1>
   </div>
   {{- range $index, $page := .Site.RegularPages.ByTitle -}}
-    {{- $headings := findRE `<h[0-9].*?>(.|\n)*?</h[0-9]>` $page.Content -}}
-    {{- $has_headings := ge (len $headings) 1 -}}
+    {{- $headings := findRE `<h[1-6].*?>(.|\n)*?</h[1-6]>` $page.Content -}}
+    {{- $heading_count := len $headings -}}
+    {{- $has_headings := ge ($heading_count) 1 -}}
     {{- if $has_headings -}}
-      {{- range $headings -}}
-        {{- $heading := . -}}
+      {{- range $heading_index, $heading := $headings -}}
         {{/* Grab the value of the heading element's ID attribute.
              We have to work around the fact that Hugo's findRE function does not return matching groups. */}}
         {{- $id := index (findRE `id=\"(.+)\"` .) 0 -}}
         {{- $id := replaceRE `id=\"(.*)\"` "$1" $id -}}
-        {{- $heading_level := int (index (findRE "[0-9]" . 1) 0) -}}
+        {{- $heading_level := int (index (findRE "[1-6]" . 1) 0) -}}
         {{- if gt $heading_level ($data.Get "prev_heading_level") -}}
+          {{- if gt $heading_index 0 -}}
+            <li class="toc-indent">
+          {{- end -}}
           <ul class="toc-hierarchy-l{{ $heading_level }}">
         {{- else if lt $heading_level ($data.Get "prev_heading_level") -}}
-          {{- range seq 1 (sub ($data.Get "prev_heading_level") $heading_level) -}}
-          </ul>
+          {{- $heading_diff := sub ($data.Get "prev_heading_level") $heading_level -}}
+          {{- range seq 1 $heading_diff -}}
+            </ul>
+            {{- if lt . $heading_diff -}}
+              </li>
+            {{- end -}}
           {{- end -}}
         {{- end -}}
         {{- $data.Set "prev_heading_level" $heading_level -}}
@@ -30,6 +37,13 @@
           <a class="toc-section-link{{ if eq $currentPage.RelPermalink $page.RelPermalink }} active{{end}}" href="{{ $href }}">{{- $heading | plainify | htmlUnescape -}}</a>
         </li>
       {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{/* Properly end list tags at the end of the table. */}}
+  {{- range seq 1 ($data.Get "prev_heading_level") -}}
+    </ul>
+    {{- if ne . ($data.Get "prev_heading_level") -}}
+      </li>
     {{- end -}}
   {{- end -}}
 </nav>
