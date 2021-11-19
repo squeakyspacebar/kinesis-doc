@@ -14,7 +14,7 @@ Kinesis comes with a **Muscle Render Gizmo** component that adds muscle visualiz
   - Attach the **Muscle Render Gizmo** component. Select the **Add Component** button in the **Inspector** window, then type "Muscle Render Gizmo" into the search field when it appears. The **Muscle Render Gizmo** component should appear as the top search result. Select the component in the search result to add it to the object. We'll leave the default settings for the tutorial.
     ![Screenshot of Muscle Render Gizmo in Object Picker](images/tutorial-pick-muscle-render-gizmo.png)
 3. Your project hierarchy should now look something like this:
-  ![Screenshot of Muscle Render Gizmo added to hierarchy](images/tutorial-muscle-render-gizmo.png)
+    ![Screenshot of Muscle Render Gizmo added to hierarchy](images/tutorial-muscle-render-gizmo.png)
 
 ## Setting Up a Basic Muscle
 
@@ -26,14 +26,14 @@ In order to freely edit the tutorial model, first we'll need to [unpack the pref
 
 1. Find the "TutorialArmature" object in the Hierarchy window and secondary click on it to open up a context menu.
 2. Select the *Unpack Prefab* option.
-  ![Screenshot of Hierarchy object context menu](images/tutorial-unpack-prefab.png)
+    ![Screenshot of Hierarchy object context menu](images/tutorial-unpack-prefab.png)
 
 ### Creating a Jointed Limb
 
 Before you can create a functioning muscle, you'll first need at least two **Rigidbody** objects connected by a **Joint**. We'll set up the left arm's upper and lower sections with **Rigidbody** components and connect them via a **CharacterJoint** component that represents the elbow.
 
 1. In the **Hierarchy** window, expand out the object hierarchy under "Skeleton" until both the "Left_UpperArm" and "Left_LowerArm" objects are exposed. The path should be "TutorialArmature" > "Skeleton" > "Hips" > "Spine" > "Chest" > "UpperChest" > "Left_Shoulder" > "Left_UpperArm" > "Left_LowerArm".
-  ![Screenshot of unrolled hierarchy](images/tutorial-unrolled-hierarchy.png)
+    ![Screenshot of unrolled hierarchy](images/tutorial-unrolled-hierarchy.png)
 2. Add a **Rigidbody** component to the "Left_UpperArm" object.
   - Select the "Left_UpperArm" object to focus it in the **Inspector** window.
   - Select the **Add Component** button in the **Inspector** window, then type "Rigidbody" into the search field when it appears. The **Rigidbody** component should appear as the top search result. Select the component in the search result to add it to the "Left_UpperArm" object.
@@ -67,7 +67,7 @@ Before you can create a functioning muscle, you'll first need at least two **Rig
   1. Set the *Bone* field of the second muscle node to reference the "Left_LowerArm" object.
   2. Set *Offset* to X:0, Y: 0.04, Z: 0.02.
 6. Your Inspector window should now look something like this:
-  ![Screenshot of Biceps object focused in Inspector window](images/tutorial-biceps-inspector.png)
+    ![Screenshot of Biceps object focused in Inspector window](images/tutorial-biceps-inspector.png)
 
 ## Testing Muscle Movement
 
@@ -77,9 +77,9 @@ Once you've defined your muscle path, it's time to test its movement. Kinesis co
   > **Tip:** It might help at this point to collapse the **Muscle Tendon Unit** component in the Inspector window by selecting the triangular icon next to the name in the header bar. This will help declutter your view.
 2. Configure the **Muscle Stimulator** component:
   - Set *Run Fixed Update* to `true`.
-  ![Screenshot of Muscle Stimulator with Run Fixed Update checked](images/tutorial-run-fixed-update.png)
+    ![Screenshot of Muscle Stimulator with Run Fixed Update checked](images/tutorial-run-fixed-update.png)
 3. Enter Play Mode and bring the left arm into view in the Scene view.
 4. With the "Biceps" muscle object in focus in the **Inspector** window, navigate to the **Muscle Stimulator** component and change the value of the *Excitation* field by adjusting the slider. You should see the lower arm react to the changes in excitation.
-  ![Screenshot of Biceps being activated in Scene view](images/tutorial-activated-biceps.png)
+    ![Screenshot of Biceps being activated in Scene view](images/tutorial-activated-biceps.png)
 
-That's the end of the tutorial. Feel free to continue to experiment with the tutorial environment or move on to the [Demo Scene](05-demo-scene.md#demo-scene).
+That's the end of the tutorial. Feel free to continue to experiment with the tutorial environment or move on to the [Demo Scene](05-demo-scene#demo-scene).

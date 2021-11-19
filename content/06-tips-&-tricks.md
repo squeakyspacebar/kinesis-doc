@@ -14,7 +14,7 @@
 
 ## Troubleshooting Muscle Movement
 
-This is a big topics since Unity physics has a lot of parts to it. **Rigidbody**, **Joint**,  **Muscle Node**, and **Muscle Tendon Unit** configurations all affect how bodies and muscles behave, and there are myriad reasons why muscles may fail to behave as anticipated (beyond your own misconceptions). I've created an initial checklist from issues that I've encountered:
+This is a big topics since Unity physics has a lot of parts to it. **Rigidbody**, **Joint**,  **Muscle Node**, and **Muscle Tendon Unit** configurations all affect body and muscle behavior, and there are many reasons why muscles may fail to behave as anticipated including flawed expectations. I've created an initial checklist from issues that I've encountered:
 
 - Make sure that each muscle node `Bone` field references the actual `GameObject` that you want to attach to. Errors can easily be made if you use the Object Picker interface and have objects that share the same name.
 

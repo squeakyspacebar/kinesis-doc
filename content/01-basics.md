@@ -9,7 +9,7 @@
 
 ### Beginner Orientation
 
-The recommended way to start is to review the rest of the [Basics](01-basics.md#basics) and [Fundamentals](02-fundamentals.md#fundamentals) sections for a high-level overview of the package and its architecture. After that, check out the [Tutorial](03-tutorial.md#tutorial) and the [Demo](05-demo-scene.md#demo-scene) scenes included with the package, and read the [Tip & Tricks](06-tips-&-tricks.md#tips-&-tricks) section when you're ready to start experimenting.
+The recommended way to start is to review the rest of the [Basics](01-basics#basics) and [Fundamentals](02-fundamentals#fundamentals) sections for a high-level overview of the package and its architecture. After that, check out the [Tutorial](03-tutorial#tutorial) and the [Demo](05-demo-scene#demo-scene) scenes included with the package, and read the [Tip & Tricks](06-tips-&-tricks#tips-&-tricks) section when you're ready to start experimenting.
 
 If you're reading a local version of this documentation, you can find the latest version online at [https://squeakyspacebar.github.io/kinesis-doc](https://squeakyspacebar.github.io/kinesis-doc). You can also find the Doxygen-generated API documentation in the package directory under `Kinesis/Documentation/html/index.html` or online at [https://squeakyspacebar.github.io/kinesis-doc/api/](https://squeakyspacebar.github.io/kinesis-doc/api/).
 

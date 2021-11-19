@@ -2,7 +2,7 @@
 
 ## Demo Overview
 
-Kinesis comes with a simple demonstration scene that includes a model rigged with several muscles. Please refer to the [Package Contents](01-basics.md#package-contents) section for the demo directory layout.
+Kinesis comes with a simple demonstration scene that includes a model rigged with several muscles. Please refer to the [Package Contents](01-basics#package-contents) section for the demo directory layout.
 > **Caveat:** The model in the demo is not meant to be taken as anatomically precise or accurate. The model is only generally humanoid, the skeleton is fairly simple, and the muscle paths are "looks good enough" estimates adapted to the morphology of the model.
 
 > The parameters of the muscles themselves are also currently not set against any particular reference, so their responses may not be quite true to life. Also, not all of the muscles were able to receive equal amounts of testing attention, so there are certain to be configurations that don't behave well. Feel free to experiment away, just be aware that the model is merely a rough demo.
